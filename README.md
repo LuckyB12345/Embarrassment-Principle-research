@@ -26,12 +26,12 @@ w(z) = -1 + A e^{-\alpha z} \sin(\beta z)
 \]
 
 ## Files
-- `embarrassment-principle-research .tex`                 - Full LaTeX manuscript for journal submission
+- `embarrassment-principle-research.tex`                 - Full LaTeX manuscript for journal submission
 - `fig1_residual.pdf`         - Residuals vs ΛCDM
 - `fig2_wz.pdf`               - Dark energy equation of state
 - `fig3_hz.pdf`               - Hubble parameter comparison
 - `chi2_vs_alpha.pdf`         - χ² evolution with damping parameter α
-- `TheEnd.py`                     - Fitting code (L-BFGS-B minimization)
+- `embarrassment-principle-research.py`                     - Fitting code (L-BFGS-B minimization)
 
 ## Data
 - Pantheon+ SNe Ia (full covariance)
