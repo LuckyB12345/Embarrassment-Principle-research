@@ -214,6 +214,12 @@ def make_all_plots():
 
     print("✅ 4 张论文图已全部生成：fig1~fig4")
 
+# 临时测试：只计算 ΛCDM 的 χ²
+test_Om, test_H0 = 0.3, 70.0
+mu_test = np.array([mu_lcdm(z, test_Om, test_H0) for z in z_sn])
+resid = mu_o - mu_test
+chi2_test = resid @ cho_solve(cho_fac, resid)
+print(f"测试 ΛCDM (Om=0.3, H0=70) χ² = {chi2_test:.2f}")
 make_all_plots()
 
 # ================= 最终输出 =================
