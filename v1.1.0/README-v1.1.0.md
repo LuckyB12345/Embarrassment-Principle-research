@@ -57,4 +57,4 @@ License
 MIT License.
 
 Acknowledgments
-The author thanks DouBao, DeepSeek, QianWen, and 阿Q for extensive support.
+The author thanks DouBao, DeepSeek, QianWen for extensive support.
