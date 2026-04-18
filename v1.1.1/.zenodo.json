@@ -1,0 +1,25 @@
+{
+    "title": "Pantheon+ and DESI BAO Data Reveal a Geometric Tension: A Δχ²≈147 Signal for Late-Time Oscillatory Residuals",
+    "description": "Code and paper for the discovery that low-redshift data (Pantheon+ SN + DESI BAO) strongly prefer an undamped oscillating dark energy model over ΛCDM when Ωm is free, with continuous and reversible suppression of oscillations as Ωm is forced to Planck's value. Contains final reproducible fit code (v1.1.1, high precision, parallel), Monte Carlo overfitting test (30 simulations, p<0.03), figures, and LaTeX source. Δχ² = 147.28.",
+    "creators": [
+        {
+            "name": "Li, Kaibing",
+            "affiliation": "Physics Research Group",
+            "orcid": "0009-0000-0000-0000"
+        }
+    ],
+    "keywords": [
+        "cosmology",
+        "dark energy",
+        "oscillating dark energy",
+        "Hubble tension",
+        "Pantheon+",
+        "DESI BAO",
+        "embarrassment principle",
+        "undamped oscillations",
+        "geometric tension"
+    ],
+    "license": "MIT",
+    "upload_type": "software",
+    "version": "1.1.1"
+}
