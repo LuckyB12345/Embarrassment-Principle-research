@@ -1,0 +1,31 @@
+{
+    "title": "The Embarrassment Principle: The Universe Does Not Tend Toward Equilibrium — It Oscillates Forever",
+    "description": "Code and paper for the discovery that low-redshift data (Pantheon+ SN + DESI BAO) strongly prefer an undamped oscillating dark energy model over ΛCDM when Ωm is free, with continuous and reversible suppression of oscillations as Ωm is forced to Planck's value. Contains final reproducible fit code (v1.1.1, high precision, parallel), Monte Carlo overfitting test (30 simulations, p<0.03), smoke test (Δχ²=0 on mock ΛCDM data), figures, and LaTeX source. Δχ² = 147.28. The paper introduces the Embarrassment Principle: the universe does not tend toward equilibrium; it oscillates forever.",
+    "creators": [
+        {
+            "name": "Li, Kaibing",
+            "affiliation": "Physics Research Group",
+            "orcid": "0009-0000-0000-0000"
+        }
+    ],
+    "keywords": [
+        "cosmology",
+        "dark energy",
+        "oscillating dark energy",
+        "Hubble tension",
+        "Pantheon+",
+        "DESI BAO",
+        "embarrassment principle",
+        "undamped oscillations",
+        "limit cycle"
+    ],
+    "license": "MIT",
+    "upload_type": "software",
+    "version": "1.1.1.3",
+    "related_identifiers": [
+        {
+            "identifier": "10.5281/zenodo.19642665",
+            "relation": "isNewVersionOf"
+        }
+    ]
+}
