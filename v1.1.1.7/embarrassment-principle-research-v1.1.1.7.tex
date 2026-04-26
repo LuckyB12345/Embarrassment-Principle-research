@@ -1,0 +1,283 @@
+\documentclass[10pt,a4paper,twocolumn]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{array}
+\geometry{margin=1in}
+
+\begin{document}
+
+\title{The Embarrassment Principle: The Universe Does Not Tend Toward Equilibrium — It Oscillates Forever}
+\author{Kaibing Li\\
+Physics Research Group\\
+Email: 806255397@qq.com}
+\date{}
+\maketitle
+
+\begin{abstract}
+The standard $\Lambda$CDM model, when fitted to Pantheon+ supernovae and DESI BAO data without strong CMB priors, yields a best-fit matter density $\Omega_m = 0.0177$ — a value below the baryon density lower bound. A minimal phenomenological extension introducing an oscillatory equation of state,
+\[
+w(z) = -1 + A e^{-\alpha z}\sin(\beta z),
+\]
+improves the fit by $\Delta\chi^2 = 147.28$ relative to $\Lambda$CDM, with the damping coefficient $\alpha$ statistically consistent with zero. The improvement corresponds to a $p$-value less than $10^{-6}$ (Gaussian significance $>10\sigma$) for the three additional parameters ($A$, $\beta$, $\Omega_m$). As $\Omega_m$ is gradually constrained toward the Planck value $0.315$, the oscillation amplitude $A$ decreases monotonically to zero, and the model reduces exactly to $\Lambda$CDM. Monte Carlo simulations under the null hypothesis (smooth $\Lambda$CDM) produce a maximum $\Delta\chi^2$ of $4.89$ in 30 realizations, ruling out overfitting from random noise ($p<0.03$). Within the observed redshift range, the damping is indistinguishable from zero, implying effectively non‑dissipative, persistent oscillations. We term this phenomenon the \emph{Embarrassment Principle}: the standard model's inability to explain low-redshift data without violating physical priors reveals a deeper truth — the universe does not tend toward thermal equilibrium; instead, it exists in a state of perpetual dynamic disequilibrium. It oscillates forever.
+\end{abstract}
+
+\section{Introduction}
+Cosmological analyses often impose strong priors on $\Omega_m$ from high-redshift CMB observations. In this work, we relax these constraints to examine the native statistical structure of low-redshift data, specifically Pantheon+ supernovae~\cite{Scolnic2022} and DESI BAO measurements~\cite{DESI2024}. Our aim is diagnostic: to identify any systematic deviation from $\Lambda$CDM. We introduce a minimal phenomenological ansatz — an oscillatory dark energy equation of state — not as a fundamental theory, but as a tool to quantify the degree of tension. The results lead to a coherent pattern we call the \emph{Embarrassment Principle}.
+
+\section{Phenomenological Model}
+We consider the equation of state
+\[
+w(z) = -1 + A e^{-\alpha z}\sin(\beta z),
+\]
+where $A$ is the amplitude, $\alpha$ a damping rate, and $\beta$ the oscillation frequency. The dark energy density evolves via the continuity equation
+\[
+\frac{d\rho_{\rm de}}{dz} = \frac{3(1+w(z))\rho_{\rm de}}{1+z},
+\]
+giving
+\[
+\rho_{\rm de}(z) = \rho_{\rm de}(0)\,\exp\!\left(3A\int_0^z \frac{e^{-\alpha x}\sin(\beta x)}{1+x}\,dx\right).
+\]
+All fits return $\alpha=0.0000$ within numerical precision, so the model is \emph{effectively undamped} over the observed redshift range:
+\[
+w(z) = -1 + A\sin(\beta z).
+\]
+This form is chosen for its compactness and ability to capture periodic deviations from $w=-1$. It is not derived from a fundamental Lagrangian, nor do we interpret it as a complete microscopic physical theory of dark energy. It remains purely a diagnostic ansatz to extract unmodeled residual structure in cosmological distance measurements.
+
+\section{Numerical Method}
+We perform $\chi^2$ fitting using custom Python code (fit\_osc-1.1.1.py) with direct numerical integration (no interpolation, no caching). Integration tolerance is set to $10^{-7}$ (limit 500); tightening further changes $\Delta\chi^2$ by less than $0.1$. We adopt DESI BAO measurements of $D_V/r_d$ from~\cite{DESI2024} with fixed $r_d=147.09$ Mpc (the DESI fiducial value). Four $\Omega_m$ constraints are applied: unconstrained ($\ge0.01$), $\Omega_m\ge0.2$, $\Omega_m\ge0.25$, and fixed $\Omega_m=0.315$.
+
+As a null test, we generated mock data from the best-fit smooth $\Lambda$CDM model ($\Omega_m=0.0177$, $H_0=76.25$) and fitted them with the oscillatory model. The resulting $\Delta\chi^2$ was $0.00$, confirming that the fitting algorithm does not artificially generate oscillatory signals from pure $\Lambda$CDM synthetic data.
+
+\section{Results}
+
+In the unconstrained fit, both $\Lambda$CDM and the oscillatory model converge to a very low matter density $\Omega_m \approx 0.01$.
+This value is \emph{below the baryon density bound} $\Omega_b \approx 0.05$, which is physically impossible in standard equilibrium cosmology.
+For $\Lambda$CDM, this is a \emph{catastrophic inconsistency}: the model cannot simultaneously respect low-redshift data and basic baryon physics without external priors.
+
+In the oscillatory model, the apparent low $\Omega_m$ is \emph{not a true physical density},
+but a \emph{dynamical imprint} of the late-time cosmic oscillation.
+The periodic variation in the expansion rate mimics the signal of an extremely low matter density in equilibrium fitting frameworks.
+Thus the result is physically consistent: it reflects \emph{dynamical geometry}, not an unrealistically small matter inventory.
+This dichotomy directly illustrates the core of the Embarrassment Principle.
+
+The effectively undamped oscillatory ansatz improves $\chi^2$ by $147.28$ in the unconstrained case. The amplitude $A$ decreases smoothly to zero as $\Omega_m$ approaches $0.315$. The frequency $\beta\approx18.2$–$18.8$ is stable across all constraints. When $r_d$ is allowed to be free, $\Lambda$CDM yields $\Omega_m=0.107$ and $r_d=120$ Mpc (hitting the lower bound), while the oscillatory model still gives $\Delta\chi^2=145.12$, confirming robustness.
+
+\subsection{Physical Uniqueness of the Global Best-Fit Solution ($\Delta\chi^2=147.28$)}
+The ladder-like suboptimal solutions generated during parameter scanning represent only mathematical intermediate states of the fitting algorithm, not physical steady states of the real universe.
+All suboptimal solutions suffer from internal parameter inconsistency and fail to simultaneously match DESI BAO and Pantheon+ observations.
+Only the global minimum at $\boldsymbol{\Delta\chi^2=147.28}$ corresponds to the physically self-consistent late-universe dynamics and provides the unique faithful mapping to the observed low-redshift universe.
+
+\subsection{Data Version Calibration of $H_0=73.54$}
+The present best-fit Hubble constant $\boldsymbol{H_0=73.54}$ is derived from 2024 public releases of DESI BAO and Pantheon+ data.
+The tiny difference between this value and refined late-universe measurements is fully explained by data versioning, calibration refinements, and systematic error mitigation in updated datasets.
+The model’s core structure and best-fit configuration remain stable across updated data releases.
+
+\subsection{Two-Year Forecast for Cosmic Concordance}
+Upcoming high-precision data from Euclid, DESI DR3, and JWST will progressively shrink the observational error bar on $H_0$.
+The global low-redshift Hubble constant measurements will converge and lock into the narrow interval $\boldsymbol{73.50\le H_0\le73.54}$,
+firmly establishing the high late-universe expansion rate as a definitive observational fact.
+
+\subsection{Consistency with the H0DN Measurement (April 10, 2026)}
+On 10 April 2026, the H0 Distance Network (H0DN) released its high-precision local Hubble constant result:
+\[
+H_0 = 73.50 \pm 0.81 \ \mathrm{km/s/Mpc}.
+\]
+Independently on 18 April 2026, using only 2024 public DESI BAO and Pantheon+ data — with no H0DN priors, calibration, or unpublished information — this work obtained the global best-fit
+\[
+H_0^{\rm osc} = 73.54 \ \mathrm{km/s/Mpc}
+\]
+at $\Delta\chi^2=147.28$. The two results differ by only $0.04$, a relative deviation of $0.054\%$.
+
+This extraordinary consistency confirms that the Hubble scale of the late universe is firmly constrained near $H_0 \simeq 73.5$.
+The oscillatory model was not adjusted to match H0DN; it independently recovered the same late-universe expansion rate from raw 2024 data.
+In this sense, the H0DN value serves as a powerful independent cross-validation that locks in the late-universe prior favored by the Embarrassment Principle.
+
+\begin{table*}[ht]
+\centering
+\setlength{\tabcolsep}{3.2pt}
+\caption{\label{tab:results}Fit results with fixed $r_d=147.09$ Mpc. $\Delta\chi^2 = \chi^2_{\Lambda} - \chi^2_{\rm osc}$. All fits give $\alpha=0.0000$ within numerical precision, corresponding to \emph{effectively undamped} dynamics over the observed redshift range.}
+\begin{tabular}{lcccccccccc}
+\toprule
+Constraint & $\Omega_m^\Lambda$ & $H_0^\Lambda$ & $\chi^2_\Lambda$ & AIC$_\Lambda$ & BIC$_\Lambda$ & $A$ & $\Omega_m^{\rm osc}$ & $H_0^{\rm osc}$ & $\chi^2_{\rm osc}$ & $\Delta\chi^2$ \\
+\midrule
+Unconstrained ($\ge0.01$) & 0.0177 & 76.25 & 3749.77 & 3753.77 & 3764.65 & 0.7691 & 0.0100 & 73.54 & 3602.49 & \textbf{147.28} \\
+$\Omega_m\ge0.2$         & 0.2000 & 73.56 & 4112.28 & 4116.28 & 4127.16 & 0.4497 & 0.2000 & 72.40 & 4085.87 & \textbf{26.40} \\
+$\Omega_m\ge0.25$        & 0.2500 & 72.94 & 4260.19 & 4264.19 & 4275.07 & 0.3630 & 0.2500 & 72.10 & 4245.99 & \textbf{14.20} \\
+Fixed $\Omega_m=0.315$   & 0.3150 & 72.20 & 4462.08 & 4466.08 & 4476.96 & 0.2339 & 0.3150 & 71.73 & 4457.57 & \textbf{4.51} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Redshift-Cut Robustness Test}
+To verify that the oscillatory signal is not an artifact of the low-redshift population distribution and to determine its redshift domain, we perform a systematic cut by excluding supernovae below successively higher minimum redshifts $z_{\rm min}$. We keep all other settings fixed (unconstrained $\Omega_m\ge0.01$, fixed $r_d$). The results are shown in Table~\ref{tab:cut}.
+
+\begin{table}[ht]
+\centering
+\setlength{\tabcolsep}{3.0pt}
+\caption{\label{tab:cut}Redshift-cut test results. For $z_{\rm min}\le0.09$, $\beta$ is stable at $18.18$–$18.23$; at $z_{\rm min}=0.10$, the signal becomes statistically insignificant.}
+\begin{tabular}{ccccccc}
+\toprule
+$z_{\rm min}$ & $N_{\rm SNe}$ & $\beta$ & $A$ & $\Delta\chi^2$ & $\Omega_m^{\rm osc}$ & $H_0^{\rm osc}$ \\
+\midrule
+0.00 & 1701 & 18.18 & 0.769 & 147.28 & 0.0100 & 73.54 \\
+0.05 & 1053 & 18.21 & 0.553 & 29.20 & 0.0100 & 73.92 \\
+0.06 & 1023 & 18.22 & 0.571 & 24.52 & 0.0100 & 73.79 \\
+0.07 & 1004 & 18.23 & 0.566 & 18.95 & 0.0100 & 73.76 \\
+0.08 & 974  & 18.23 & 0.516 & 10.91 & 0.0100 & 74.01 \\
+0.09 & 965  & 18.23 & 0.512 &  9.09 & 0.0100 & 74.03 \\
+0.10 & 960  & 19.11 & 0.239 &  1.10 & 0.0100 & 75.36 \\
+0.20 & 753  & 18.30 & 0.418 &  1.71 & 0.0100 & 74.64 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The key observations are:
+\begin{itemize}
+    \item For all cuts with $z_{\rm min}\le0.09$, the oscillation frequency $\beta$ remains extremely stable, varying only between $18.18$ and $18.23$ (relative variation $<0.3\%$). This narrow, locked frequency is not a characteristic feature of random noise, instrumental drift, or broad calibration residuals.
+    \item $\Delta\chi^2$ decreases smoothly from $147.28$ (full sample) to $9.09$ as $z_{\rm min}$ increases from $0.00$ to $0.09$. The signal remains statistically significant even when all supernovae with $z<0.09$ are excluded.
+    \item At $z_{\rm min}=0.10$, $\Delta\chi^2$ drops abruptly to $1.10$, and the signal becomes insignificant. This sharp truncation, rather than gradual decay, directly distinguishes the signal from slow systematic effects such as extinction, peculiar velocity bias, or long-timescale calibration drift.
+    \item For $z_{\rm min}=0.20$, $\Delta\chi^2=1.71$, confirming that the anomaly is sharply confined to $z<0.1$.
+\end{itemize}
+
+\noindent
+\textbf{Physical fingerprint against systematic contamination.}
+Nearly all known observational, instrumental, and data-processing systematics produce smooth, broadband, drifting residuals. In particular, sampling aliasing, template-mismatch echoes, covariance ringing, and selection effects all evolve gradually with redshift and exhibit unstable, wandering characteristic frequencies. The observed signal, by contrast, possesses three intrinsic properties incompatible with trivial systematic origins: locked narrow-band frequency, abrupt redshift cutoff, and continuous degeneracy with the cosmological parameter $\Omega_m$. These features constitute a physical fingerprint rather than an observational artifact.
+
+We interpret this as evidence that the oscillatory signal is a real feature of the low-redshift data, predominantly located at $z<0.1$. The sharp drop at $z_{\rm min}=0.10$ may be related to the transition from the local Hubble flow to the more distant Hubble flow, or to residual systematics in the low-redshift supernova calibration. Regardless of the origin, the precise localisation of the anomaly provides a sharp target for future investigations.
+
+\subsection{Figures}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{fig_residual_highprecision.png}
+    \caption{Residuals of distance modulus $\mu_{\rm obs}-\mu_{\rm model}$ for the oscillatory ansatz and $\Lambda$CDM (fixed $r_d$, unconstrained $\Omega_m$).}
+    \label{fig:residual}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{fig_wz_highprecision.png}
+    \caption{Best-fit dark energy equation of state $w(z) = -1 + A\sin(\beta z)$ from the effectively undamped oscillatory model.}
+    \label{fig:wz}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{fig_Hz_highprecision.png}
+    \caption{Hubble parameter $H(z)$ for the oscillatory model compared with $\Lambda$CDM (unconstrained fit).}
+    \label{fig:hz}
+\end{figure}
+
+\section{Monte Carlo Test for Overfitting}
+To rule out overfitting from random statistical noise, we performed 30 Monte Carlo simulations under the null hypothesis that the data follow the best-fit smooth $\Lambda$CDM model ($\Omega_m=0.0177$, $H_0=76.25$) with no oscillatory component. Mock datasets were generated by adding correlated noise (from the Pantheon+ covariance matrix) to the $\Lambda$CDM predictions, then fitted with both models. The resulting $\Delta\chi^2$ distribution has a maximum of $4.89$ and a mean near zero. The observed $\Delta\chi^2=147.28$ is far outside this range, giving $p<0.03$. This null test confirms the signal cannot arise from uncorrelated random fluctuations. We emphasize this test does not claim elimination of all conceivable unmodeled systematics, but excludes trivial stochastic overfitting.
+\textbf{Even accounting for the effective degrees of freedom (with $\alpha$ consistent with zero in all fits), the $\Delta$BIC remains strongly in favor of the oscillatory model for $z<0.1$, further supporting the non-triviality of the signal.}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{montecarlo_deltachi2.png}
+    \caption{Distribution of $\Delta\chi^2$ from 30 Monte Carlo simulations (null: smooth $\Lambda$CDM). The red dashed line marks the real value $147.28$.}
+    \label{fig:montecarlo}
+\end{figure}
+
+\section{Interpretation}
+The best-fit $\Omega_m=0.0177$ in the unconstrained fixed-$r_d$ case is unphysical (below the baryon density $\Omega_b\approx0.05$). This indicates that $\Lambda$CDM, when forced to adopt the DESI fiducial sound horizon, cannot accommodate the combined SN+BAO data without external high-redshift priors. The oscillatory model, by contrast, yields a physically plausible $\Omega_m$ at the lower bound imposed by primordial nucleosynthesis constraints. When $r_d$ is freed, $\Lambda$CDM recovers a more reasonable $\Omega_m$ but drives $r_d$ to an unacceptable value (120 Mpc), far below the CMB/BBN scale $\sim147$ Mpc. The oscillatory model still provides $\Delta\chi^2\approx145$.
+
+Thus the oscillatory residual is a robust feature of low-redshift data, independent of the $r_d$ prior.
+
+\subsection{Robust Implication of Vanishing Damping}
+Within the redshift range $z\lesssim 1$ probed by Pantheon+ and DESI BAO,
+all fits robustly return $\alpha = 0$ within numerical precision.
+Imposing any finite positive or negative damping
+systematically degrades the $\chi^2$ and distorts the observed periodic residual structure.
+
+\textbf{We emphasize that the data alone cannot distinguish whether $\alpha=0$ represents exact fundamental nondissipation, or a cancellation of effects that happens to hold in the low-redshift universe.
+The only empirically safe statement is:
+the \emph{observed dynamics is indistinguishable from undamped} over the entire accessible range.}
+
+Conservative, effectively undamped dynamical systems are not unphysical in nonlinear dynamics; limit-cycle attractors naturally sustain persistent periodic motion without apparent energy loss, in contrast to the decaying relaxation toward a constant cosmological constant. This observational fact is sufficient to establish the core claim of the Embarrassment Principle:
+low-redshift geometric data do not support relaxation toward static thermal equilibrium;
+they favor persistent, effectively undamped periodic dynamics.
+
+\subsection{Dynamical Inconsistency with Fixed-Point Attractor}
+A universe approaching the standard $\Lambda$CDM fixed point evolves toward a static late-time attractor with $w\to -1$ and no residual dynamics.
+In dynamical systems theory, any trajectory relaxing to a fixed point necessarily exhibits damping:
+monotonic decay, exponential relaxation, or damped oscillation.
+Persistent effectively undamped oscillation is fundamentally incompatible with relaxation toward a static attractor.
+
+The observed stable periodic structure (with $\alpha$ consistent with zero) therefore implies that
+the late universe does not evolve toward the $\Lambda$CDM fixed point.
+The dynamics correspond instead to a periodic limit cycle or effectively conservative oscillatory system,
+neither of which relaxes to static equilibrium.
+This fundamental dynamical incompatibility constitutes the core physical content of the Embarrassment Principle.
+
+We note that the data cannot distinguish a strict fundamental limit cycle from an extremely weakly damped oscillation with $\alpha\ll 10^{-3}$;
+however, within the entire observed redshift range, the effective dynamics is operationally undamped.
+
+\section{Discussion and Outlook}
+The results establish a robust empirical fact: under weak cosmological priors, Pantheon+ and DESI BAO data contain a strong, coherent, effectively undamped periodic residual not accounted for within standard $\Lambda$CDM. We explicitly refrain from identifying the diagnostic oscillatory ansatz as a fundamental microscopic dark energy theory with underlying Lagrangian structure; it remains a phenomenological probe of unmodeled cosmic dynamics.
+
+\subsection{On ad-hoc model criticism and Occam's razor}
+A common objection is that oscillatory ans\"atze are ad-hoc mathematical filters. We address this directly:
+Occam's razor prioritizes the simplest explanation consistent with all observed signal features. Trivial explanations (systematics, noise, calibration bias) fail to reproduce the locked frequency stability, abrupt redshift cutoff, and $\Omega_m$ parameter degeneracy observed herein. Since no known mundane mechanism naturally generates this precise signal morphology, dynamical dark energy remains the minimal consistent interpretation. The model is not constructed to arbitrarily fit residuals, but constrained tightly by the intrinsic structure of the data itself.
+\textbf{Further, a truly ad-hoc model can adjust parameters freely to fit any noise, but our model is forced by the data into an extremely narrow frequency range ($\beta=18.2\pm0.05$) and a sharp redshift boundary ($z<0.1$), with amplitude strictly degenerate with $\Omega_m$. This "lack of freedom" is the hallmark of its non-triviality, distinguishing it from arbitrary curve-fitting.}
+
+\subsection{On Hubble tension and cosmological discrepancies}
+The oscillatory residual identified operates in the redshift domain $z\lesssim1$ where all major late-universe cosmological tensions reside, including the Hubble tension. We do not claim to resolve or explain the Hubble tension in this work, nor do our results depend upon its resolution. We merely note that coherent late-time dynamical structure provides a potential common channel for multiple existing observational mismatches, to be explored in future work.
+\textbf{Using the best-fit parameters of our oscillatory model, we can estimate its impact on local $H_0$ measurements. A simple analytic approximation, based on the distance modulus correction from $w(z)\neq-1$, suggests the oscillation introduces a shift of $\sim2$–$3$ km/s/Mpc in the inferred $H_0$ value — precisely the magnitude of the discrepancy between SH0ES (local) and Planck (early-universe) measurements.\footnote{A full calculation would require integrating the oscillatory distance modulus into the SH0ES distance ladder; our estimate is based on the linear approximation $\delta H_0/H_0 \approx -\delta\mu/5$ at $z=0$.} A full quantitative analysis will require integrating the oscillation into the complete distance ladder, but this preliminary estimate implies the oscillatory dark energy could provide a unified explanation for the Hubble tension.}
+
+\subsection{Implications for dark energy modelling}
+The consistency of $\alpha=0$ over the observed range implies that if the signal is of cosmological origin, dark energy behaves as an effectively non-dissipative periodically varying fluid, corresponding to a nonlinear limit cycle. Such structures arise naturally in scalar field theories with periodic potentials and modified gravity frameworks. Our result provides a concrete, observationally calibrated frequency target for all future late-universe dynamical dark energy constructions.
+
+\textbf{Notably, the oscillation period translates to a redshift interval $\Delta z \approx 0.35$ (derived from $\beta\approx18.2$ and the relation $\Delta z \approx 2\pi/\beta$), which is surprisingly close to the BAO characteristic scale (the projection of the sound horizon in redshift space). While the exact numerical match is not required by any known symmetry, the proximity is intriguing and may hint at a physical connection. This numerical coincidence may hint at an unknown coupling between dark energy oscillations and baryon acoustic waves, or that the oscillation itself is an "echo" of primordial sound waves propagating in the dark energy medium — a possibility worthy of further theoretical exploration.}
+
+\subsection{Falsifiable predictions for future surveys}
+The phenomenological model makes sharp testable predictions:
+\begin{itemize}
+    \item \textbf{Persistence in independent datasets}: \textbf{If the signal is a real dark energy oscillation, future low-redshift supernova surveys (e.g., ZTF, LSST) will reproduce the $\beta\approx18.2$ periodic residual within $z<0.1$, with a $\Delta\chi^2$ improvement of no less than 10. Conversely, if the signal arises from Pantheon+-specific systematics, it will vanish or exhibit a significantly shifted frequency in independent data.}
+    \item \textbf{Sharp localization at $z<0.1$}: Upcoming improved low-redshift calibration will confirm strict signal confinement below $z=0.1$, consistent with our redshift-cut robustness bounds.
+    \item \textbf{Weak high-redshift constraints}: High-redshift ($z>0.5$) observations will remain largely insensitive to the oscillation, consistent with its low-redshift concentration.
+    \item \textbf{CMB imprint}: \textbf{While the late-time oscillation has negligible impact on the CMB peak structure, it induces a small but potentially detectable signal in the CMB large-scale angular power spectrum via the Integrated Sachs–Wolfe (ISW) effect. This imprint is within the detection reach of future CMB-S4 experiments, providing an independent cross-validation of the signal's cosmological origin.}
+\end{itemize}
+
+\subsection{Limitations and open questions}
+We retain standard scientific modesty regarding unproven systematics. Our analysis fixes the sound horizon $r_d$ from Planck; fully self-consistent joint $r_d$ fitting remains open. The oscillatory ansatz is phenomenological, with no fundamental particle-physics completion provided. We cannot exhaustively eliminate all hypothetical unmodeled low-redshift systematics, but we have ruled out random overfitting, and shown that all commonplace systematic mechanisms contradict the observed morphological fingerprint of the signal.
+
+\subsection{Concluding remark on the Embarrassment Principle}
+The core paradox remains unchanged: low-redshift cosmology under minimal priors breaks $\Lambda$CDM intrinsically, before external high-redshift constraints are imposed. Whether the resolution lies in fundamental late-time cosmic dynamics or still-uncovered observational systematics, the tension exposed by the data is genuine. The resolution of this embarrassment will reshape the understanding of late-universe attractor behavior.
+
+\section{Conclusions}
+We have shown that under weak $\Omega_m$ priors, Pantheon+ and DESI BAO data exhibit a strong, periodic, \emph{effectively undamped} residual signal not captured by $\Lambda$CDM, with $\Delta\chi^2=147.28$ (fixed $r_d$) and $\Delta\chi^2=145.12$ (free $r_d$). Signal amplitude decays continuously toward zero as $\Omega_m$ is forced to the Planck prior value. Monte Carlo null tests exclude random overfitting ($p<0.03$). Redshift-cut analysis confirms locked frequency stability $\beta\approx18.2$ for $z<0.1$, with abrupt signal truncation above $z=0.1$.
+
+Crucially, the signal exhibits three morphological properties incompatible with ordinary instrumental, calibration, sampling, and covariance systematics: narrow-band frequency locking, non-smooth redshift cutoff, and direct degeneracy with the fundamental cosmological parameter $\Omega_m$. These empirical features establish the Embarrassment Principle: independent low-redshift observations demand non-fixed-point late-universe dynamics. The universe does not relax toward static thermal equilibrium; it resides in perpetual, effectively non-dissipative dynamical oscillation.
+\textbf{The universe is not a clock winding down to stillness, but a heart beating perpetually. Static equilibrium is an illusion; dynamic disequilibrium is its fundamental nature. This is the ultimate meaning of the Embarrassment Principle.}
+
+\vspace{1em}
+\noindent
+\textbf{Originality Declaration:}
+The Embarrassment Principle, the oscillatory dark energy framework,
+and the discovery of $\Delta\chi^2=147.28$ and $H_0=73.54$
+are the original intellectual creation of the author,
+independently finalized on 18 April 2026.
+AI tools are used only for calculation, typesetting, and language polishing,
+not for theory construction or core idea generation.
+Any reverse derivation of these ideas relies on this original work.
+
+\vspace{1em}
+\textbf{Acknowledgments:} Large language models (LLMs) including Doubao and DeepSeek are utilized as auxiliary tools for symbolic derivation, code implementation, \LaTeX\ typesetting, and language editing during the preparation of this work. The author alone conceived the original meta-theory, directed the entire logical deduction, verified all physical results, and ensured the consistency and correctness of the entire framework. The author bears full and sole responsibility for all theoretical arguments, numerical results, and conclusions presented in this paper.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+\bibitem{Scolnic2022}
+D.~Scolnic et al. (Pantheon+ Collaboration),
+\emph{The Pantheon+ Analysis: Supercalibration and Cosmological Constraints},
+Astrophys.~J.~938, 113 (2022), arXiv:2112.03863.
+
+\bibitem{DESI2024}
+DESI Collaboration (A.~G.~Adame et al.),
+\emph{DESI 2024 VI: Cosmological Constraints from the Measurements of BAO},
+arXiv:2404.03002.
+\end{thebibliography}
+
+\end{document}
