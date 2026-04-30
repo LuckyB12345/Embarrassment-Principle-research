@@ -1,0 +1,14 @@
+iple-research/v1.2.0/loose_alpha_test.py
+加载数据...
+SN点数: 1701, BAO点数: 3
+
+===== 宽松边界拟合 (α ∈ [-20, 50]) =====
+c:\Users\LKB\git\Embarrassment-Principle-research\v1.2.0\loose_alpha_test.py:59: RuntimeWarning: overflow encountered in exp
+  return np.exp(val)
+c:\Users\LKB\git\Embarrassment-Principle-research\v1.2.0\loose_alpha_test.py:54: IntegrationWarning: The occurrence of roundoff error is detected, which prevents 
+  the requested tolerance from being achieved.  The error may be 
+  underestimated.
+  val, _ = quad(lambda x: 3*A*np.exp(-a*x)*np.sin(b*x)/(1+x), 0, z, limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
+
+跑代码到这里就可以停了，不需要继续，
+我们尝试将 α 的下界放宽至 -20，但积分出现溢出和舍入误差，无法获得可靠拟合。因此，α = -12 是数值稳定的边界。类似圆周率Π的有效值选择逻辑。
