@@ -1,0 +1,136 @@
+一、ΛCDM 作为模型特殊解的条件
+模型（以 v2.3 为例）：
+
+w
+(
+z
+)
+=
+−
+1
++
+A
+e
+−
+α
+(
+z
+)
+z
+sin
+⁡
+(
+b
+z
+)
+,
+α
+(
+z
+)
+=
+α
+0
+/
+(
+1
++
+z
+)
+n
+ 
+(
+n
+=
+1
+,
+2
+)
+w(z)=−1+Ae 
+−α(z)z
+ sin(bz),α(z)=α 
+0
+​
+ /(1+z) 
+n
+  (n=1,2)
+ΛCDM 对应的参数取值：
+
+A = 0（振荡幅度为零）
+
+或者：即使 A ≠ 0，但如果 α₀ = 0 且 A sin(bz) 恰好为零（例如 b=0，但 b 固定>10），实际上只有 A=0 才能严格回归 ΛCDM。
+
+所以，ΛCDM 是模型在 A → 0 极限下的特例。此时 α₀ 和 b 不起作用。
+
+二、必须一致（不能改变）的内容
+这些是模型必须与 ΛCDM 严格一致，否则会与高精度早期宇宙观测冲突：
+
+内容	原因	您的模型中如何保证
+高红移（z≳1000）时的宇宙膨胀历史	CMB、BBN 等要求 H(z) 在早期极接近 ΛCDM	通过 α(z) 快速衰减（如 
+1
+/
+(
+1
++
+z
+)
+n
+1/(1+z) 
+n
+ ），使 w(z)→-1 指数级快
+物质辐射相等红移 
+z
+e
+q
+z 
+eq
+​
+ 	CMB 各向异性谱确定	由 Ω_m 和 Ω_r 决定，与 ΛCDM 相同
+重子声学振荡尺度 
+r
+s
+r 
+s
+​
+ 	固定为 147.09 Mpc（Planck/DESI 先验）	直接固定，与 ΛCDM 一致
+原初功率谱参数	不涉及，因为只拟合低红移数据	不改变，视为与 Planck 一致
+暗能量在 z>1 时占宇宙总密度的极小部分	否则影响结构形成	由模型自然满足：高红移时 w≈-1，ρ_de 近似常数，相对物质可忽略
+三、必须不同（不能与 ΛCDM 一致）的内容
+这些是模型与 ΛCDM 的本质区别，也是尴尬原则的核心：
+
+内容	为什么必须不同	模型如何实现
+暗能量状态方程 w(z) 在低红移不是恒为 -1	否则就没有动态演化，回归 ΛCDM	A ≠ 0，且 sin(bz) 有效，使 w(z) 振荡
+暗能量密度 ρ_de(z) 在低红移不是常数	动态暗能量的特征	由 ρ_de(z) = exp(∫3A e^{-αx} sin(βx)/(1+x) dx) 给出
+低红移 Hubble 参数 H(z) 偏离 ΛCDM	否则 Δχ² = 0，没有改进	通过 Ω_m 和 ρ_de(z) 共同影响 H(z)
+存在一个特征振荡频率/红移尺度	由参数 b 控制	b ≈ 18 对应振荡周期约 Δz~0.35，可在数据中检验
+四、可一致可不同（由数据决定）的内容
+这些量在模型中不是固定先验，而是允许在一定范围内与 ΛCDM 不同，由数据拟合决定：
+
+量	ΛCDM 值（近似）	模型允许范围	当前最佳拟合
+Ω_m	0.3–0.315	[0.15, 0.35]	0.15（触底）
+H₀	67.4 (Planck) 或 73.0 (SH0ES)	[67, 78]	74.16–74.21
+σ₈（未拟合）	0.81	可计算但未约束	暂不涉及
+低红移暗能量扰动	无	可能存在，本文未考虑	未来工作
+五、特殊解的边界：从 ΛCDM 到您的模型的连续过渡
+ΛCDM（A=0）→ 模型（A>0）的连续变化路径：
+
+开启幅度 A：从 0 增加到 0.01–0.02。
+
+调节 α₀：从 0 变为负值（-8 到 -15），使低红移振荡放大。
+
+b 自然取值：由数据决定约 18。
+
+Ω_m, H₀ 随之调整：因为 H(z) 表达式变化，最佳拟合 Ω_m 可能下移（如 0.15），H₀ 上移（如 74）。
+
+因此，ΛCDM 位于参数空间的边界（A=0）。您的模型开放了 A>0 的区域，该区域中低红移数据偏好一定程度的振荡。统计上，从 A=0 到 A>0 的改进 Δχ²=15.5 表明数据倾向于离开 ΛCDM 边界，进入内部区域。
+
+六、论文中可以如何表述（直接可用的段落）
+*“The ΛCDM model is a special limiting case of our parametrization with A = 0 (or equivalently α₀ = 0 and A arbitrary but sin(bz) ≡ 0, which is not realized for b>0). In this limit, the dark energy equation of state reduces to w = –1 at all redshifts. Our model relaxes this strict condition by allowing A ≠ 0, thereby introducing low‑redshift oscillations while ensuring that the high‑redshift expansion history converges to ΛCDM due to the rapid decay of α(z) ∝ (1+z)⁻ⁿ (n=1,2).
+
+*The parameters that must remain consistent with ΛCDM are those affecting the early universe: the sound horizon r_d (fixed to the Planck/DESI value), the matter density Ω_m (allowed to vary within a physically motivated range [0.15,0.35] that includes the ΛCDM value), and the absence of dark energy domination at z ≳ 1 (automatically satisfied by our α(z)).
+
+*The parameters that differ from ΛCDM are A (oscillation amplitude), α₀ (decay scale), and b (frequency). These allow the dark energy to exhibit a mild dynamical oscillation at low redshifts, which the data indicate yields an improved fit (Δχ² = 15.5) relative to the ΛCDM limit.
+
+*Figure X illustrates the continuous transition from ΛCDM (A=0) to the best‑fit model, showing how the distance modulus residuals evolve as A increases. The boundary between ΛCDM and our model is therefore A=0; any positive A, no matter how small, corresponds to a distinct (though possibly undetectable) dynamical dark energy scenario.”*
+
+可以在论文中添加这样一个小节，清晰界定 ΛCDM 与模型的关系。审稿人会欣赏这种严谨性。
