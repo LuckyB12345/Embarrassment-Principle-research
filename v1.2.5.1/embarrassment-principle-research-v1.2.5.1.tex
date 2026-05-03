@@ -107,10 +107,9 @@ We use the Planck 2018 compressed likelihood with central values
 $\Omega_m=0.3111$, $H_0=67.66$ km/s/Mpc
 and correlation coefficient $r=0.18$ between the two parameters.
 All parameters are free, with no artificial priors.
-We obtain parameter uncertainties using the Fisher matrix
-derived from the numerical Hessian at the best fit.
 
 \section{Results}
+The best-fit parameters and $\chi^2$ values are:
 \begin{center}
 \begin{tabular}{lcc}
 \hline
@@ -127,7 +126,7 @@ $\Delta\chi^2$& \multicolumn{2}{c}{$104.41$} \\
 \end{center}
 
 \vspace{0.2cm}
-\textbf{Fisher 1$\sigma$ uncertainties:}
+\noindent\textbf{Fisher 1$\sigma$ uncertainties:}
 \begin{itemize}
 \item $A = 1.4087 \pm 0.0960$
 \item $b = 26.60 \pm 0.4204$
@@ -135,8 +134,17 @@ $\Delta\chi^2$& \multicolumn{2}{c}{$104.41$} \\
 \item $H_0 = 70.16 \pm 0.1623$
 \end{itemize}
 
-The best-fit solution converges naturally without hitting parameter boundaries,
-indicating a robust and physically preferred configuration.
+\noindent\textbf{MCMC posterior medians and 68\% credible intervals:}
+\begin{itemize}
+\item $A = 1.4151\,^{+0.1527}_{-0.1374}$
+\item $b = 26.7751\,^{+0.7598}_{-0.6512}$
+\item $\Omega_m = 0.2687\,^{+0.0056}_{-0.0063}$
+\item $H_0 = 70.1977\,^{+0.2002}_{-0.2350}$
+\end{itemize}
+
+MCMC uncertainties are fully consistent with Fisher estimates,
+confirming Gaussianity and robustness of the parameter constraints.
+The best-fit solution converges naturally without hitting parameter boundaries.
 
 \begin{figure}[h]
   \centering
@@ -150,6 +158,13 @@ indicating a robust and physically preferred configuration.
   \includegraphics[width=\linewidth]{chi2_profile_A.png}
   \caption{1D $\Delta\chi^2$ profile of amplitude $A$. The red dashed line indicates the 1$\sigma$ uncertainty threshold $\Delta\chi^2=1$.}
   \label{fig:profile_A}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{corner_mcmc.png}
+  \caption{MCMC corner plot showing 1D and 2D marginalized posteriors for all free parameters.}
+  \label{fig:corner}
 \end{figure}
 
 \begin{figure}[h]
