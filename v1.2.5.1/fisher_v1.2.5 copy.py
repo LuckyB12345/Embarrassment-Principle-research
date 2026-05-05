@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore")
 # ========== 常量 ==========
 C_LIGHT = 299792.458
 RD_FID = 147.09
-INTEGRAL_EPSREL = 1e-5      # 适当降低精度，大幅加速
+INTEGRAL_EPSREL = 1e-7
 INTEGRAL_LIMIT = 500
 
 # ========== 数据加载 ==========
@@ -33,20 +33,18 @@ def E_lcd(z, Om):
     return np.sqrt(Om*(1+z)**3 + (1-Om))
 
 def mu_lcd(z, Om, H0):
-    try:
-        dc, _ = quad(lambda x: C_LIGHT / E_lcd(x, Om), 0, z,
-                     limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
-    except:
-        return 1e10
-    return 5*np.log10((dc / H0) * (1+z)) + 25
+    def integrand(x):
+        return 1.0 / E_lcd(x, Om)
+    I, _ = quad(integrand, 0, z, limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
+    dc = (C_LIGHT / H0) * I
+    return 5 * np.log10(dc * (1+z)) + 25
 
 def DM_H_z_lcd(z, Om, H0):
-    try:
-        dc, _ = quad(lambda x: C_LIGHT / E_lcd(x, Om), 0, z,
-                     limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
-    except:
-        return 1e10, 1e10
-    DM = dc / H0
+    def integrand(x):
+        return 1.0 / E_lcd(x, Om)
+    I, _ = quad(integrand, 0, z, limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
+    dc = (C_LIGHT / H0) * I
+    DM = dc
     Hz = H0 * E_lcd(z, Om)
     return DM, Hz
 
@@ -63,34 +61,28 @@ def rho_osc_at_z(z, A, b):
                       limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
     except:
         val = -300.0
-    val = np.clip(val, -300, 300)
+    val = np.clip(val, -50, 50)
     return np.exp(val)
 
 def mu_osc(z, A, b, Om, H0):
-    def integrand_dc(x):
+    def integrand(x):
         rho_x = rho_osc_at_z(x, A, b)
-        rho_x = np.clip(rho_x, 0.0, 1e6)
-        return C_LIGHT / np.sqrt(Om*(1+x)**3 + (1-Om)*rho_x)
-    try:
-        dc, _ = quad(integrand_dc, 0, z,
-                     limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
-    except:
-        return 1e10
-    return 5*np.log10((dc / H0) * (1+z)) + 25
+        rho_x = np.clip(rho_x, 1e-30, 1e30)
+        return 1.0 / np.sqrt(Om*(1+x)**3 + (1-Om)*rho_x)
+    I, _ = quad(integrand, 0, z, limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
+    dc = (C_LIGHT / H0) * I
+    return 5 * np.log10(dc * (1+z)) + 25
 
 def DM_H_z_osc(z, A, b, Om, H0):
-    def integrand_dc(x):
+    def integrand(x):
         rho_x = rho_osc_at_z(x, A, b)
-        rho_x = np.clip(rho_x, 0.0, 1e6)
-        return C_LIGHT / np.sqrt(Om*(1+x)**3 + (1-Om)*rho_x)
-    try:
-        dc, _ = quad(integrand_dc, 0, z,
-                     limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
-    except:
-        return 1e10, 1e10
-    DM = dc / H0
+        rho_x = np.clip(rho_x, 1e-30, 1e30)
+        return 1.0 / np.sqrt(Om*(1+x)**3 + (1-Om)*rho_x)
+    I, _ = quad(integrand, 0, z, limit=INTEGRAL_LIMIT, epsrel=INTEGRAL_EPSREL)
+    dc = (C_LIGHT / H0) * I
+    DM = dc
     rho_z = rho_osc_at_z(z, A, b)
-    rho_z = np.clip(rho_z, 0.0, 1e6)
+    rho_z = np.clip(rho_z, 1e-30, 1e30)
     Hz = H0 * np.sqrt(Om*(1+z)**3 + (1-Om)*rho_z)
     return DM, Hz
 
@@ -110,6 +102,9 @@ def chi2_total(theta, z, mu, cov, bao, is_lcd):
         mu_model = np.array([mu_lcd(zi, Om, H0) for zi in z])
     else:
         A, b, Om, H0 = theta
+        # 物理约束：z=0.2 处必须满足加速膨胀 (w < -1/3 => 1+w < 2/3)
+        if one_plus_w(0.2, A, b) >= 2.0/3.0:
+            return 1e10
         if not (0 <= A <= 10.0 and 10 <= b <= 50 and 0.15 <= Om <= 0.40 and 65 <= H0 <= 78):
             return 1e10
         mu_model = np.array([mu_osc(zi, A, b, Om, H0) for zi in z])
@@ -142,7 +137,7 @@ def chi2_total(theta, z, mu, cov, bao, is_lcd):
     chi2_planck = planck2018_chi2(Om, H0)
     return chi2_sn + chi2_bao + chi2_planck
 
-# ========== Fisher 矩阵辅助 ==========
+# ========== Fisher 矩阵 ==========
 def num_hessian(f, x, eps=1e-4):
     n = len(x)
     H = np.zeros((n, n))
@@ -162,16 +157,16 @@ def num_hessian(f, x, eps=1e-4):
 
 # ========== 主程序 ==========
 if __name__ == "__main__":
-    print("=" * 70)
-    print("最终分析：拟合 + Fisher + 多初值测试 + 剖面图")
-    print("积分精度 epsrel =", INTEGRAL_EPSREL)
-    print("=" * 70)
+    print("="*70)
+    print("完整版 v9.0 【尴尬模型 + 普朗克 2018 联合拟合】")
+    print("✅ 正确距离公式 | BAO 正确 | 强制 z=0.2 加速")
+    print("✅ 多组随机初值测试 (20组) | 参数剖面图 (等高线 + 1D)")
+    print("="*70)
 
-    # 加载数据
     z, mu, cov, bao = load_data()
     print(f"SN 数据点: {len(z)}")
 
-    # ---------- 1. 主拟合 ----------
+    # ---------- 主拟合 ----------
     print("\n>>> 拟合 ΛCDM ...")
     lcd_res = minimize(lambda p: chi2_total(p, z, mu, cov, bao, True),
                        [0.31, 67.7], bounds=[(0.15, 0.40), (65,78)],
@@ -189,14 +184,14 @@ if __name__ == "__main__":
     chi2_osc = osc_res.fun
     delta_chi2 = chi2_lcd - chi2_osc
 
-    print("\n" + "=" * 50)
+    print("\n" + "="*50)
     print("ΛCDM 最佳拟合:")
     print(f"  Ωm = {Om_l:.4f}, H0 = {H0_l:.2f}, χ² = {chi2_lcd:.2f}")
-    print("振荡模型最佳拟合:")
+    print("振荡模型最佳拟合 (尴尬模型):")
     print(f"  A = {A_best:.4f}, b = {b_best:.2f}, Ωm = {Om_best:.4f}, H0 = {H0_best:.2f}, χ² = {chi2_osc:.2f}")
     print(f"Δχ² = {delta_chi2:.2f} (相对于 ΛCDM)")
 
-    # ---------- 2. Fisher 矩阵 ----------
+    # ---------- Fisher 矩阵 ----------
     def chi2_wrap(theta):
         return chi2_total(theta, z, mu, cov, bao, is_lcd=False)
 
@@ -206,86 +201,88 @@ if __name__ == "__main__":
     cov_fish = inv(H_fish)
     err_fish = np.sqrt(np.diag(cov_fish))
     names = ['A', 'b', 'Ωm', 'H0']
-    print("\nFisher 1σ 误差（完整 Hessian）:")
+    print("\nFisher 1σ 误差:")
     for n, e in zip(names, err_fish):
         print(f"  {n:5s} = ±{e:.4f}")
     corr = cov_fish / np.outer(err_fish, err_fish)
     print("\n相关系数矩阵:")
     print(corr)
 
-    # ---------- 3. 多组随机初值测试（可选，推荐20组）----------
-    RUN_MULTI = True   # 改为 False 可跳过
-    N_STARTS = 20      # 20 组足够
-    if RUN_MULTI:
-        print(f"\n>>> 多组随机初值测试 ({N_STARTS} 组) ...")
-        results = []
-        np.random.seed(42)
-        for _ in tqdm(range(N_STARTS), desc="Multi-start"):
-            init_rnd = [
-                np.random.uniform(0.5, 2.5),
-                np.random.uniform(20, 32),
-                np.random.uniform(0.22, 0.32),
-                np.random.uniform(69, 71)
-            ]
-            res = minimize(lambda p: chi2_total(p, z, mu, cov, bao, False),
-                           init_rnd, bounds=bounds_osc, method='L-BFGS-B',
-                           options={'maxiter':2000, 'ftol':1e-6})
-            if res.success:
-                results.append((res.x, res.fun))
-        if results:
-            chi2_vals = [r[1] for r in results]
-            best_local = results[np.argmin(chi2_vals)]
-            print(f"最低 χ² = {best_local[1]:.2f}, 参数: A={best_local[0][0]:.4f}, b={best_local[0][1]:.2f}, Om={best_local[0][2]:.4f}, H0={best_local[0][3]:.2f}")
-            print(f"χ² 均值 = {np.mean(chi2_vals):.2f}, 标准差 = {np.std(chi2_vals):.2f}")
-            close = sum(1 for c in chi2_vals if abs(c - best_local[1]) < 1.0)
-            print(f"收敛到最佳 χ² ±1 以内的次数: {close}/{len(results)}")
-        else:
-            print("警告：所有随机初值优化均失败。")
+    # ---------- 多组随机初值测试 (20组) ----------
+    print("\n>>> 多组随机初值测试 (20 组) ...")
+    results = []
+    np.random.seed(42)
+    for _ in tqdm(range(20), desc="Multi-start"):
+        init_rnd = [
+            np.random.uniform(0.5, 2.5),
+            np.random.uniform(20, 32),
+            np.random.uniform(0.22, 0.32),
+            np.random.uniform(69, 71)
+        ]
+        res = minimize(lambda p: chi2_total(p, z, mu, cov, bao, False),
+                       init_rnd, bounds=bounds_osc, method='L-BFGS-B',
+                       options={'maxiter':2000, 'ftol':1e-6})
+        if res.success:
+            results.append((res.x, res.fun))
+    if results:
+        chi2_vals = [r[1] for r in results]
+        best_local = results[np.argmin(chi2_vals)]
+        print(f"最低 χ² = {best_local[1]:.2f}, 参数: A={best_local[0][0]:.4f}, b={best_local[0][1]:.2f}, Om={best_local[0][2]:.4f}, H0={best_local[0][3]:.2f}")
+        print(f"χ² 均值 = {np.mean(chi2_vals):.2f}, 标准差 = {np.std(chi2_vals):.2f}")
+        close = sum(1 for c in chi2_vals if abs(c - best_local[1]) < 1.0)
+        print(f"收敛到最佳 χ² ±1 以内的次数: {close}/{len(results)}")
+    else:
+        print("警告：所有随机初值优化均失败。")
 
-    # ---------- 4. 参数剖面图（可选，约10分钟）----------
-    RUN_PROFILES = True
-    if RUN_PROFILES:
-        print("\n>>> 生成参数剖面图 (A-H0 等高线 + A 的 Δχ² 曲线) ...")
-        # 二维等高线
-        A_scan = np.linspace(1.2, 1.6, 25)
-        H0_scan = np.linspace(69.5, 70.8, 25)
-        chi2_grid = np.zeros((len(A_scan), len(H0_scan)))
-        print("  计算二维网格...")
-        for i, A in enumerate(tqdm(A_scan, desc="A loop")):
-            for j, H0 in enumerate(H0_scan):
-                theta = (A, b_best, Om_best, H0)
-                chi2_grid[i, j] = chi2_total(theta, z, mu, cov, bao, False)
-        # 绘图
-        fig, ax = plt.subplots()
-        X, Y = np.meshgrid(H0_scan, A_scan)
-        contour = ax.contour(X, Y, chi2_grid, levels=10, cmap='viridis')
-        ax.clabel(contour, inline=True, fontsize=8)
-        ax.scatter(H0_best, A_best, color='red', marker='*', s=100, label='best fit')
-        ax.set_xlabel('H0 [km/s/Mpc]')
-        ax.set_ylabel('A')
-        ax.set_title(rf'$\chi^2$ contour (b={b_best:.2f}, $\Omega_m$={Om_best:.4f})')
-        ax.legend()
-        plt.savefig('chi2_contour.png', dpi=150)
-        plt.close()
-        print("  保存: chi2_contour.png")
+    # ---------- 参数剖面图 (A-H0 等高线 + A 的 Δχ² 曲线) ----------
+    print("\n>>> 生成参数剖面图 ...")
+    # 二维等高线 (A, H0) 固定 b 和 Om 为最佳拟合
+    A_scan = np.linspace(1.2, 1.6, 25)
+    H0_scan = np.linspace(69.5, 70.8, 25)
+    chi2_grid = np.zeros((len(A_scan), len(H0_scan)))
+    print("  计算二维网格...")
+    for i, A_val in enumerate(tqdm(A_scan, desc="A loop")):
+        for j, H0_val in enumerate(H0_scan):
+            theta = (A_val, b_best, Om_best, H0_val)
+            chi2_grid[i, j] = chi2_total(theta, z, mu, cov, bao, False)
+    # 绘图
+    fig, ax = plt.subplots()
+    X, Y = np.meshgrid(H0_scan, A_scan)
+    contour = ax.contour(X, Y, chi2_grid, levels=10, cmap='viridis')
+    ax.clabel(contour, inline=True, fontsize=8)
+    ax.scatter(H0_best, A_best, color='red', marker='*', s=100, label='best fit')
+    ax.set_xlabel('H0 [km/s/Mpc]')
+    ax.set_ylabel('A')
+    ax.set_title(rf'$\chi^2$ contour (b={b_best:.2f}, $\Omega_m$={Om_best:.4f})')
+    ax.legend()
+    plt.savefig('chi2_contour.png', dpi=150)
+    plt.close()
+    print("  保存: chi2_contour.png")
 
-        # 一维 A 扫描
-        A_1d = np.linspace(1.2, 1.6, 30)
-        chi2_1d = []
-        for A in tqdm(A_1d, desc="1D A scan"):
-            theta = (A, b_best, Om_best, H0_best)
-            chi2_1d.append(chi2_total(theta, z, mu, cov, bao, False))
-        chi2_1d = np.array(chi2_1d)
-        plt.figure()
-        plt.plot(A_1d, chi2_1d - np.min(chi2_1d), 'b-', linewidth=2)
-        plt.axhline(1.0, color='r', linestyle='--', label=r'$\Delta\chi^2=1$')
-        plt.xlabel('A')
-        plt.ylabel(r'$\Delta\chi^2$')
-        plt.title(f'1D profile of A (b={b_best:.2f}, $\Omega_m$={Om_best:.4f}, H0={H0_best:.2f})')
-        plt.legend()
-        plt.grid(True)
-        plt.savefig('chi2_profile_A.png', dpi=150)
-        plt.close()
-        print("  保存: chi2_profile_A.png")
+    # 一维 A 扫描
+    A_1d = np.linspace(1.2, 1.6, 30)
+    chi2_1d = []
+    for A_val in tqdm(A_1d, desc="1D A scan"):
+        theta = (A_val, b_best, Om_best, H0_best)
+        chi2_1d.append(chi2_total(theta, z, mu, cov, bao, False))
+    chi2_1d = np.array(chi2_1d)
+    plt.figure()
+    plt.plot(A_1d, chi2_1d - np.min(chi2_1d), 'b-', linewidth=2)
+    plt.axhline(1.0, color='r', linestyle='--', label=r'$\Delta\chi^2=1$')
+    plt.xlabel('A')
+    plt.ylabel(r'$\Delta\chi^2$')
+    plt.title(f'1D profile of A (b={b_best:.2f}, $\Omega_m$={Om_best:.4f}, H0={H0_best:.2f})')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig('chi2_profile_A.png', dpi=150)
+    plt.close()
+    print("  保存: chi2_profile_A.png")
+
+    # 物理检验
+    z_check = [0.2, 0.4, 0.6, 0.8, 1.0]
+    wp1 = [one_plus_w(zi, A_best, b_best) for zi in z_check]
+    print("\n📌 1+w(z) 物理检验:")
+    for zi, val in zip(z_check, wp1):
+        print(f"z={zi:.1f} | 1+w = {val:.4f}")
 
     print("\n所有分析完成。")

@@ -1,0 +1,11 @@
+iple-research/v1.2.5.1/predict_planck_from_lowz.py
+只用 SN+BAO 拟合振荡模型（无 Planck 先验，含物理约束）...
+Best-fit: A=1.0376, b=26.02, Om=0.1000, H0=72.57, χ²=3778.27
+
+Fisher 1σ 误差: A ±0.0845, b ±0.3702, Om ±0.0000, H0 ±0.20
+
+Planck 2018: Om = 0.3111 ± 0.0056, H0 = 67.66 ± 0.42
+
+偏差 (σ): Om = -37.70σ, H0 = 11.68σ
+⚠️ 偏差超过 2σ → 模型依赖于 Planck 先验，需要谨慎讨论。
+PS C:\Users\LKB\git\Embarrassment-Principle-research> 

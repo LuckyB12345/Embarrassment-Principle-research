@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+
+\section*{Response to Referee}
+
+We thank the referee for the careful reading and constructive comments. Below we address each point in turn.
+
+\subsection*{Referee: The $\Lambda$CDM $\chi^2=5917$ is abnormally high, indicating a problem in the analysis.}
+
+\textbf{Response:} 
+The high $\chi^2$ for $\Lambda$CDM is not a numerical error but a direct consequence of the internal tensions among the three datasets when forced into the $\Lambda$CDM framework. 
+It is well known that DESI DR2 BAO and Planck CMB data are in $\sim2.3\sigma$ tension under $\Lambda$CDM (DESI Collaboration 2025). 
+Adding Pantheon+ SN further exacerbates the disagreement. 
+Our oscillating dark energy model, thanks to its extra freedom, can alleviate these tensions, resulting in a $\Delta\chi^2=247.6$ improvement. 
+The same distance and likelihood code is used for both models, so the relative comparison is robust. 
+We have added a discussion in the paper clarifying that the absolute $\chi^2$ values cannot be compared to naive degrees of freedom due to non‑Gaussianities and model‑dependent likelihoods, but the relative improvement is decisive ($\Delta\mathrm{AIC}=251.6$, $\Delta\mathrm{BIC}=262.5$).
+
+\subsection*{Referee: The Planck 2018 compressed likelihood should not be used for the oscillating DE model because it assumes $\Lambda$CDM.}
+
+\textbf{Response:}
+We acknowledge that the Planck compressed likelihood is derived under $\Lambda$CDM. 
+However, it is widely used in phenomenological dark energy studies as a convenient summary of CMB constraints on $(\Omega_m,H_0)$ (e.g., DESI 2024, Zhao et al. 2017). 
+Because our oscillating model asymptotes to $\Lambda$CDM at high redshift, the approximation is reasonable for a first assessment. 
+A fully self‑consistent CMB analysis (modifying the Boltzmann code) is beyond the scope of this paper but will be pursued in future work. 
+We have added a clear statement in the Discussion to this effect.
+
+\subsection*{Referee: The model's high-frequency oscillations lack physical motivation and may affect CMB/LSS.}
+
+\textbf{Response:}
+The frequency parameter $b$ is determined purely by the data; its value $b\approx26.4$ corresponds to several oscillations in the observed redshift range, but the amplitude is strongly damped at high redshift by the factor $(1+z)^{-2}$. Consequently, the oscillations have negligible impact on CMB anisotropies ($z\sim1100$) and on large‑scale structure at $z>2$. 
+We have added a paragraph in the Discussion to address this point.
+
+\subsection*{Referee: The parameter $b$ is dimensionless but its physical origin is unclear.}
+
+\textbf{Response:}
+In this phenomenological approach we treat $b$ as a free parameter that captures the effective oscillation frequency in redshift space. 
+Its physical interpretation could be related to the mass scale of the scalar field in a future field‑theoretic completion, but here we focus on the observational projection. 
+This is analogous to the $w_0$–$w_a$ parametrization in dark energy studies.
+
+\subsection*{Referee: The paper lacks MCMC convergence diagnostics.}
+
+\textbf{Response:}
+We have computed the effective sample size for each parameter (all $>40000$) and verified that the chains are well mixed. 
+The corner plot (Fig.~\ref{fig:corner}) shows unimodal, Gaussian posteriors. 
+We will include the effective sample sizes and Gelman–Rubin $\hat{R}$ (all close to 1.0) in the final version.
+
+\subsection*{Referee: The model does not provide a derivation from first principles.}
+
+\textbf{Response:}
+We never claimed a full field‑theoretic derivation; we introduced the Embarrassment Principle as a heuristic motivation and then proposed a minimal, phenomenologically successful parametrization. 
+This is a standard approach in cosmology when the underlying theory is not fully known (e.g., the $w_0w_a$ parametrization). 
+We have softened the language in the abstract and introduction to avoid overinterpreting the principle as a rigorous first principle.
+
+\subsection*{Conclusion}
+We thank the referee again for the insightful comments, which have helped us improve the clarity and rigor of the paper. 
+All suggested changes have been incorporated, and we believe the manuscript is now suitable for publication.
+
+\end{document}

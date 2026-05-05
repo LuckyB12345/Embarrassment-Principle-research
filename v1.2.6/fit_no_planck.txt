@@ -1,0 +1,13 @@
+ssment-Principle-research/v1.2.6/fit_no_planck.py
+======================================================================
+无 Planck 先验：只用 SN + BAO (DESI 6点)
+======================================================================
+SN: 1701 points, BAO: 6 points
+
+>>> 拟合 ΛCDM ...
+ΛCDM: Ωm=0.0960, H0=75.03, χ²=4259.72
+
+>>> 拟合振荡模型 ...
+振荡模型: A=0.9764, b=26.25, Ωm=0.0926, H0=72.73, χ²=4180.88
+Δχ² = 78.84 (振荡 vs ΛCDM)
+(egg_cosmo) PS C:\Users\LKB\git\Embarrassment-Principle-research> 
